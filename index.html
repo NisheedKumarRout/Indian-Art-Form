@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BHĀRATA KALĀ - Indian Art Heritage Portal</title>
+    
+    <!-- Google Fonts: Cinzel (Regal Classical) & Inter (Modern UI) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet CSS for Activity 2 Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+    
+    <!-- Custom Unified Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Ambient Visual Effects -->
+    <div class="bg-mesh"></div>
+    <div class="noise"></div>
+    <canvas id="particleCanvas"></canvas>
+    <div class="mouse-glow" id="mouseGlow"></div>
+
+    <!-- ====================================================================
+         STATE 1: LIQUID GLASS AUTHENTICATION
+         ==================================================================== -->
+    <main id="authScreen">
+        <div class="glass-card" id="glassCard">
+            <!-- Heritage Insignia Badge -->
+            <div class="star-badge" title="Bhārata Kalā Heritage">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="9"></circle>
+                    <path d="M12 3v18"></path>
+                    <path d="M3 12h18"></path>
+                    <path d="m5.6 5.6 12.8 12.8"></path>
+                    <path d="m18.4 5.6-12.8 12.8"></path>
+                </svg>
+            </div>
+
+            <div class="view-container">
+                <!-- SIGN IN VIEW -->
+                <div class="view view-active" id="loginView">
+                    <h1 class="glass-title stagger-in">Welcome to <span class="gold-accent">Kalā-Setu</span></h1>
+                    <p class="glass-subtitle stagger-in">Sign in to access the interactive Indian Art Heritage gallery.</p>
+
+                    <!-- Auth Error Notice -->
+                    <div id="authError" class="auth-error-notice" style="display:none;" role="alert"></div>
+
+                    <div class="form-group stagger-in">
+                        <label class="form-label" for="loginEmail">Email Address</label>
+                        <div class="input-wrap">
+                            <input type="email" class="form-input" placeholder="nisheedkumarrout@gmail.com" id="loginEmail" autocomplete="email" value="nisheedkumarrout@gmail.com">
+                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        </div>
+                    </div>
+
+                    <div class="form-group stagger-in">
+                        <label class="form-label" for="loginPassword">Password</label>
+                        <div class="input-wrap">
+                            <input type="password" class="form-input" placeholder="1234" id="loginPassword" autocomplete="current-password" value="1234">
+                            <button type="button" class="pw-toggle" data-target="loginPassword" aria-label="Toggle password visibility">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-icon"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-off-icon" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-row stagger-in">
+                        <label class="checkbox-wrap">
+                            <input type="checkbox" checked id="keepSignedIn">
+                            <span class="checkbox-box"></span>
+                            <span class="checkbox-text">Keep me signed in</span>
+                        </label>
+                        <span class="forgot-link" id="demoHint">Login: nisheedkumarrout@gmail.com &bull; 1234</span>
+                    </div>
+
+                    <button class="btn-primary stagger-in" id="signInBtn">
+                        <span>Enter Heritage Gallery</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </button>
+
+                    <button class="btn-demo stagger-in" id="instantGuestBtn" title="Instant Access without typing">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                        </svg>
+                        <span>Instant Guest Access (One-Click)</span>
+                    </button>
+
+                    <div class="divider stagger-in">or continue with</div>
+
+                    <p class="footer-text stagger-in">New researcher? <a id="toSignup">Create account</a></p>
+                </div>
+
+                <!-- SIGN UP VIEW -->
+                <div class="view view-hidden" id="signupView">
+                    <h1 class="glass-title stagger-in">Join <span class="gold-accent">Kalā-Setu</span></h1>
+                    <p class="glass-subtitle stagger-in">Register to discover centuries of classical Indian art.</p>
+
+                    <div class="form-group stagger-in">
+                        <label class="form-label" for="signupName">Full Name</label>
+                        <div class="input-wrap">
+                            <input type="text" class="form-input" placeholder="Nisheed Kumar" id="signupName" autocomplete="name">
+                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        </div>
+                    </div>
+
+                    <div class="form-group stagger-in">
+                        <label class="form-label" for="signupEmail">Email Address</label>
+                        <div class="input-wrap">
+                            <input type="email" class="form-input" placeholder="student@srm.edu.in" id="signupEmail" autocomplete="email">
+                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        </div>
+                    </div>
+
+                    <div class="form-group stagger-in">
+                        <label class="form-label" for="signupPassword">Create Password</label>
+                        <div class="input-wrap">
+                            <input type="password" class="form-input" placeholder="At least 6 characters" id="signupPassword" autocomplete="new-password">
+                            <button type="button" class="pw-toggle" data-target="signupPassword" aria-label="Toggle password visibility">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-icon"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-off-icon" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                            </button>
+                        </div>
+                        <div class="pw-strength" id="pwStrength"><div class="pw-strength-bar" id="pwStrengthBar"></div></div>
+                    </div>
+
+                    <button class="btn-primary stagger-in" id="signUpBtn">
+                        <span>Register & Enter</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </button>
+
+                    <p class="footer-text stagger-in">Already have an account? <a id="toLogin">Sign in</a></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ====================================================================
+         STATE 2: LOGGED-IN INDIAN ART HERITAGE PORTAL
+         ==================================================================== -->
+    <div id="appPortal">
+        <!-- Top Navigation Bar -->
+        <header class="glass-nav">
+            <div class="nav-brand" id="brandHomeBtn">
+                <div class="brand-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="9"></circle>
+                        <path d="M12 3v18"></path>
+                        <path d="M3 12h18"></path>
+                        <path d="m5.6 5.6 12.8 12.8"></path>
+                        <path d="m18.4 5.6-12.8 12.8"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="brand-title">BHĀRATA KALĀ</h1>
+                    <div class="brand-subtitle">Indian Art Heritage Portal &bull; 14 Masterworks</div>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <nav class="nav-tabs" aria-label="Portal Navigation">
+                <button class="nav-tab-btn active" data-tab="tab-home" id="tabBtnHome">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span>Overview & Team</span>
+                </button>
+                <button class="nav-tab-btn" data-tab="tab-timeline" id="tabBtnTimeline">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    <span>Activity 1: Art Timeline (14)</span>
+                </button>
+                <button class="nav-tab-btn" data-tab="tab-map" id="tabBtnMap">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+                    <span>Activity 2: Geographic Map (14)</span>
+                </button>
+            </nav>
+
+            <!-- User Info & Logout -->
+            <div class="nav-actions">
+                <div class="user-badge">
+                    <div class="user-avatar" id="avatarInitial">N</div>
+                    <span class="user-name" id="userNameDisplay">Nisheed Kumar Rout</span>
+                </div>
+                <button class="btn-logout" id="logoutBtn" title="Sign out of portal">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    <span>Sign Out</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- ================================================================
+             VIEW 1: LANDING PAGE & "MADE BY" TEAM SHOWCASE
+             ================================================================ -->
+        <section class="tab-content active" id="tab-home">
+            <div class="hero-section">
+                <div class="hero-pill">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="12 8 8 12 12 16 16 12 12 8"></polygon></svg>
+                    Expanded Gallery &bull; 14 Historical Masterpieces
+                </div>
+                <h2 class="hero-title">Chronicles of Indian Art</h2>
+                <p class="hero-description">
+                    Welcome to the comprehensive digital museum celebrating 4,500 years of artistic genius across India — from prehistoric Harappan metallurgy and Mauryan polished sandstone to Gupta frescoes, Pallava coastal reliefs, Ellora monoliths, Chola bronzes, Khajuraho nagara temples, Konark stone chariots, Vijayanagara architecture, Thanjavur gold foil icons, and Mughal & Rajput court miniatures.
+                </p>
+
+                <!-- Direct Activity Launchers -->
+                <div class="launch-grid">
+                    <div class="launch-card" id="launchActivity1">
+                        <div>
+                            <span class="launch-badge">Activity 1 &bull; 14 Artworks</span>
+                            <h3>Historical Art Timeline</h3>
+                            <p>Explore an interactive chronological journey across 5 seminal artistic epochs (2500 BCE to 18th C. CE) with high-definition replicas, material insights, and historical context.</p>
+                        </div>
+                        <div class="launch-action">
+                            <span>Explore Timeline (14 Items)</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </div>
+                    </div>
+
+                    <div class="launch-card" id="launchActivity2">
+                        <div>
+                            <span class="launch-badge">Activity 2 &bull; 14 Locations</span>
+                            <h3>Geographic Origin Map</h3>
+                            <p>Navigate a geospatial dark canvas map of India pinpointing 14 masterwork origins from Mohenjo-Daro, Sarnath, and Sanchi to Ajanta, Ellora, Konark, Thanjavur, and Kishangarh.</p>
+                        </div>
+                        <div class="launch-action">
+                            <span>Launch Geographic Map</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Contributors / Made By Section -->
+            <section class="team-section">
+                <div class="section-header">
+                    <h2>Project Developed By</h2>
+                    <p>Academic contributors behind the design, curation, and implementation of this portal</p>
+                </div>
+
+                <div class="team-grid">
+                    <!-- Contributor 1 -->
+                    <div class="team-card">
+                        <div class="team-avatar">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        </div>
+                        <div class="team-info">
+                            <h4>Nisheed Kumar Rout</h4>
+                            <span class="team-reg">RA2411003011822</span>
+                        </div>
+                    </div>
+
+                    <!-- Contributor 2 -->
+                    <div class="team-card">
+                        <div class="team-avatar">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        </div>
+                        <div class="team-info">
+                            <h4>Rudra Prakash Swain</h4>
+                            <span class="team-reg">RA2411003011778</span>
+                        </div>
+                    </div>
+
+                    <!-- Contributor 3 -->
+                    <div class="team-card">
+                        <div class="team-avatar">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        </div>
+                        <div class="team-info">
+                            <h4>Abhinav Singh</h4>
+                            <span class="team-reg">RA2411003011820</span>
+                        </div>
+                    </div>
+
+                    <!-- Contributor 4 -->
+                    <div class="team-card">
+                        <div class="team-avatar">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        </div>
+                        <div class="team-info">
+                            <h4>Krishan Kumar</h4>
+                            <span class="team-reg">RA2411003011812</span>
+                        </div>
+                    </div>
+
+                    <!-- Contributor 5 -->
+                    <div class="team-card">
+                        <div class="team-avatar">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        </div>
+                        <div class="team-info">
+                            <h4>Samanth</h4>
+                            <span class="team-reg">RA2411003011790</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="app-footer">
+                <p>BHĀRATA KALĀ &bull; Academic Project Submission &bull; Designed with <strong>Liquid Glass Aesthetics</strong></p>
+            </footer>
+        </section>
+
+        <!-- ================================================================
+             VIEW 2: ACTIVITY 1 - INDIAN ART HISTORY TIMELINE
+             ================================================================ -->
+        <section class="tab-content" id="tab-timeline">
+            <div class="timeline-header">
+                <h2>Timeline of Indian Art</h2>
+                <p>Chronological gallery of 14 monumental artifacts across four millennia</p>
+            </div>
+
+            <!-- Era Filter Pills -->
+            <div class="filter-bar" id="timelineFilterBar">
+                <button class="filter-btn active" data-filter="all">All Masterworks (14)</button>
+                <button class="filter-btn" data-filter="ancient">Indus Valley (2500 BCE)</button>
+                <button class="filter-btn" data-filter="mauryan">Mauryan & Early Buddhist (3rd–1st C. BCE)</button>
+                <button class="filter-btn" data-filter="classical">Classical Golden Age (5th–8th C. CE)</button>
+                <button class="filter-btn" data-filter="medieval">Medieval Temple Marvels (10th–13th C. CE)</button>
+                <button class="filter-btn" data-filter="imperial">Imperial & Court Art (15th–18th C. CE)</button>
+            </div>
+
+            <!-- Vertical Timeline Container -->
+            <div class="timeline-container" id="timelineList">
+                <!-- Dynamically populated by app.js -->
+            </div>
+
+            <footer class="app-footer">
+                <p>Activity 1 &bull; Indian Art History Timeline &bull; Click any artifact card to inspect replica details</p>
+            </footer>
+        </section>
+
+        <!-- ================================================================
+             VIEW 3: ACTIVITY 2 - GEOGRAPHIC ART MAP (LEAFLET)
+             ================================================================ -->
+        <section class="tab-content" id="tab-map">
+            <div class="map-view-container">
+                <!-- Overlay title -->
+                <div class="map-header-overlay">
+                    <h2>Indian Art Map</h2>
+                    <p>Geographic origins of 14 historical masterpieces across the Indian subcontinent</p>
+                </div>
+
+                <!-- Quick Location Fly-to Pills -->
+                <div class="map-pills-bar" id="mapQuickPills">
+                    <button class="map-pill-btn active" data-place="all">Reset View</button>
+                    <button class="map-pill-btn" data-place="indus">Mohenjo-Daro</button>
+                    <button class="map-pill-btn" data-place="yakshi">Patna</button>
+                    <button class="map-pill-btn" data-place="maurya">Sarnath</button>
+                    <button class="map-pill-btn" data-place="sanchi">Sanchi</button>
+                    <button class="map-pill-btn" data-place="ajanta">Ajanta</button>
+                    <button class="map-pill-btn" data-place="mahabalipuram">Mamallapuram</button>
+                    <button class="map-pill-btn" data-place="ellora">Ellora</button>
+                    <button class="map-pill-btn" data-place="khajuraho">Khajuraho</button>
+                    <button class="map-pill-btn" data-place="chola">Thanjavur</button>
+                    <button class="map-pill-btn" data-place="konark">Konark</button>
+                    <button class="map-pill-btn" data-place="hampi">Hampi</button>
+                    <button class="map-pill-btn" data-place="mughal">Agra</button>
+                    <button class="map-pill-btn" data-place="bani-thani">Kishangarh</button>
+                </div>
+
+                <!-- The Leaflet Map Canvas -->
+                <div id="map"></div>
+
+                <!-- Sliding Glass Sidebar Inspector -->
+                <aside id="mapSidebar" class="map-sidebar hidden" aria-label="Artifact Information">
+                    <button id="closeMapSidebar" class="close-sidebar-btn" aria-label="Close sidebar">&times;</button>
+                    <div class="map-sidebar-content">
+                        <!-- Sidebar Navigation Controls -->
+                        <div class="gallery-nav-bar">
+                            <button class="gallery-nav-btn" id="sidebarPrevBtn" title="Previous Artifact">&larr; Prev</button>
+                            <span class="gallery-counter" id="sidebarCounter">1 / 14</span>
+                            <button class="gallery-nav-btn" id="sidebarNextBtn" title="Next Artifact">Next &rarr;</button>
+                        </div>
+
+                        <img id="mapArtImg" src="" alt="Artwork">
+                        <h3 id="mapArtTitle">Title</h3>
+                        <div id="mapArtPlace">Location</div>
+                        <div id="mapArtDate">Date</div>
+                        <div id="mapArtPeriod">Period</div>
+                        <div id="mapArtMedium" class="artifact-medium-tag">Medium</div>
+                        <div class="sidebar-divider"></div>
+                        <div id="mapArtDesc">Description</div>
+                        <button class="btn-bridge" id="sidebarToTimelineBtn">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            <span>Inspect in Art Timeline</span>
+                        </button>
+                    </div>
+                </aside>
+            </div>
+        </section>
+    </div>
+
+    <!-- ====================================================================
+         TIMELINE ARTIFACT INSPECT MODAL
+         ==================================================================== -->
+    <div id="artifactModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h2 id="modalTitle">Artifact Details</h2>
+                    <span class="modal-subtitle" id="modalPeriodSubtitle">Period &bull; Location</span>
+                </div>
+                <div class="modal-header-actions">
+                    <button class="gallery-nav-btn" id="modalPrevBtn" title="Previous Masterpiece">&larr;</button>
+                    <span class="gallery-counter" id="modalCounter">1 / 14</span>
+                    <button class="gallery-nav-btn" id="modalNextBtn" title="Next Masterpiece">&rarr;</button>
+                    <button class="close-modal" id="closeModalBtn" aria-label="Close modal">&times;</button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="artifact-image-box">
+                    <img id="modalImage" class="artifact-img" src="" alt="Artifact Replica">
+                </div>
+                <div class="modal-info-box">
+                    <div id="modalDescription"></div>
+                    <button class="btn-bridge" id="modalToMapBtn">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon></svg>
+                        <span>Locate on Geographic Map</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaflet JS Library -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    
+    <!-- Application Logic -->
+    <script src="app.js"></script>
+</body>
+</html>

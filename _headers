@@ -1,0 +1,11 @@
+/*
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+
+/*.docx
+  Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  Content-Disposition: attachment
+
+/*.pdf
+  Content-Type: application/pdf
+  Content-Disposition: inline

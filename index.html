@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Leaflet CSS for Activity 2 Map -->
+    <!-- Leaflet CSS for Geographic Map -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
     
     <!-- Custom Unified Stylesheet -->
@@ -25,129 +25,9 @@
     <div class="mouse-glow" id="mouseGlow"></div>
 
     <!-- ====================================================================
-         STATE 1: LIQUID GLASS AUTHENTICATION
+         MAIN INDIAN ART HERITAGE PORTAL (DIRECT ACCESS)
          ==================================================================== -->
-    <main id="authScreen">
-        <div class="glass-card" id="glassCard">
-            <!-- Heritage Insignia Badge -->
-            <div class="star-badge" title="Bhārata Kalā Heritage">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="9"></circle>
-                    <path d="M12 3v18"></path>
-                    <path d="M3 12h18"></path>
-                    <path d="m5.6 5.6 12.8 12.8"></path>
-                    <path d="m18.4 5.6-12.8 12.8"></path>
-                </svg>
-            </div>
-
-            <div class="view-container">
-                <!-- SIGN IN VIEW -->
-                <div class="view view-active" id="loginView">
-                    <h1 class="glass-title stagger-in">Welcome to <span class="gold-accent">Kalā-Setu</span></h1>
-                    <p class="glass-subtitle stagger-in">Sign in to access the interactive Indian Art Heritage gallery.</p>
-
-                    <!-- Auth Error Notice -->
-                    <div id="authError" class="auth-error-notice" style="display:none;" role="alert"></div>
-
-                    <div class="form-group stagger-in">
-                        <label class="form-label" for="loginEmail">Email Address</label>
-                        <div class="input-wrap">
-                            <input type="email" class="form-input" placeholder="nisheedkumarrout@gmail.com" id="loginEmail" autocomplete="email" value="nisheedkumarrout@gmail.com">
-                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                        </div>
-                    </div>
-
-                    <div class="form-group stagger-in">
-                        <label class="form-label" for="loginPassword">Password</label>
-                        <div class="input-wrap">
-                            <input type="password" class="form-input" placeholder="1234" id="loginPassword" autocomplete="current-password" value="1234">
-                            <button type="button" class="pw-toggle" data-target="loginPassword" aria-label="Toggle password visibility">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-icon"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-off-icon" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="form-row stagger-in">
-                        <label class="checkbox-wrap">
-                            <input type="checkbox" checked id="keepSignedIn">
-                            <span class="checkbox-box"></span>
-                            <span class="checkbox-text">Keep me signed in</span>
-                        </label>
-                        <span class="forgot-link" id="demoHint">Login: nisheedkumarrout@gmail.com &bull; 1234</span>
-                    </div>
-
-                    <button class="btn-primary stagger-in" id="signInBtn">
-                        <span>Enter Heritage Gallery</span>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                    </button>
-
-                    <button class="btn-demo stagger-in" id="instantGuestBtn" title="Instant Access without typing">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                        </svg>
-                        <span>Instant Guest Access (One-Click)</span>
-                    </button>
-
-                    <div class="divider stagger-in">or continue with</div>
-
-                    <p class="footer-text stagger-in">New researcher? <a id="toSignup">Create account</a></p>
-                </div>
-
-                <!-- SIGN UP VIEW -->
-                <div class="view view-hidden" id="signupView">
-                    <h1 class="glass-title stagger-in">Join <span class="gold-accent">Kalā-Setu</span></h1>
-                    <p class="glass-subtitle stagger-in">Register to discover centuries of classical Indian art.</p>
-
-                    <div class="form-group stagger-in">
-                        <label class="form-label" for="signupName">Full Name</label>
-                        <div class="input-wrap">
-                            <input type="text" class="form-input" placeholder="Nisheed Kumar" id="signupName" autocomplete="name">
-                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                        </div>
-                    </div>
-
-                    <div class="form-group stagger-in">
-                        <label class="form-label" for="signupEmail">Email Address</label>
-                        <div class="input-wrap">
-                            <input type="email" class="form-input" placeholder="student@srm.edu.in" id="signupEmail" autocomplete="email">
-                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                        </div>
-                    </div>
-
-                    <div class="form-group stagger-in">
-                        <label class="form-label" for="signupPassword">Create Password</label>
-                        <div class="input-wrap">
-                            <input type="password" class="form-input" placeholder="At least 6 characters" id="signupPassword" autocomplete="new-password">
-                            <button type="button" class="pw-toggle" data-target="signupPassword" aria-label="Toggle password visibility">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-icon"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-off-icon" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
-                            </button>
-                        </div>
-                        <div class="pw-strength" id="pwStrength"><div class="pw-strength-bar" id="pwStrengthBar"></div></div>
-                    </div>
-
-                    <button class="btn-primary stagger-in" id="signUpBtn">
-                        <span>Register & Enter</span>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                    </button>
-
-                    <p class="footer-text stagger-in">Already have an account? <a id="toLogin">Sign in</a></p>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- ====================================================================
-         STATE 2: LOGGED-IN INDIAN ART HERITAGE PORTAL
-         ==================================================================== -->
-    <div id="appPortal">
+    <div id="appPortal" class="active">
         <!-- Top Navigation Bar -->
         <header class="glass-nav">
             <div class="nav-brand" id="brandHomeBtn">
@@ -162,79 +42,124 @@
                 </div>
                 <div>
                     <h1 class="brand-title">BHĀRATA KALĀ</h1>
-                    <div class="brand-subtitle">Indian Art Heritage Portal &bull; 14 Masterworks</div>
+                    <div class="brand-subtitle">Indian Art Heritage &bull; Academic Portfolio</div>
                 </div>
             </div>
 
             <!-- Navigation Tabs -->
             <nav class="nav-tabs" aria-label="Portal Navigation">
                 <button class="nav-tab-btn active" data-tab="tab-home" id="tabBtnHome">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                     <span>Overview & Team</span>
                 </button>
-                <button class="nav-tab-btn" data-tab="tab-timeline" id="tabBtnTimeline">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                    <span>Activity 1: Art Timeline (14)</span>
+                <button class="nav-tab-btn" data-tab="tab-timeline" id="tabBtnP1">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    <span>Project 1: Art Timeline</span>
                 </button>
-                <button class="nav-tab-btn" data-tab="tab-map" id="tabBtnMap">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
-                    <span>Activity 2: Geographic Map (14)</span>
+                <button class="nav-tab-btn" data-tab="tab-map" id="tabBtnP2">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+                    <span>Project 2: Geographic Map</span>
+                </button>
+                <button class="nav-tab-btn" data-tab="tab-project4" id="tabBtnP4">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                    <span>Project 4: Cave Storyboard</span>
+                </button>
+                <button class="nav-tab-btn" data-tab="tab-project5" id="tabBtnP5">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                    <span>Project 5: Sculpture Analysis</span>
+                </button>
+                <button class="nav-tab-btn" data-tab="tab-project6" id="tabBtnP6">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.563-2.512 5.563-5.563C22 6.5 17.5 2 12 2z"/></svg>
+                    <span>Project 6: Regional Art & Fusion</span>
                 </button>
             </nav>
 
-            <!-- User Info & Logout -->
+            <!-- Academic Badge -->
             <div class="nav-actions">
                 <div class="user-badge">
-                    <div class="user-avatar" id="avatarInitial">N</div>
-                    <span class="user-name" id="userNameDisplay">Nisheed Kumar Rout</span>
+                    <div class="user-avatar" style="background:rgba(212,175,55,0.15); color:var(--gold); border:1px solid rgba(212,175,55,0.35);">🏛️</div>
+                    <span class="user-name">SRM Academic Portal</span>
                 </div>
-                <button class="btn-logout" id="logoutBtn" title="Sign out of portal">
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                        <polyline points="16 17 21 12 16 7"></polyline>
-                        <line x1="21" y1="12" x2="9" y2="12"></line>
-                    </svg>
-                    <span>Sign Out</span>
-                </button>
             </div>
         </header>
 
         <!-- ================================================================
-             VIEW 1: LANDING PAGE & "MADE BY" TEAM SHOWCASE
+             VIEW 1: OVERVIEW & TEAM SHOWCASE
              ================================================================ -->
         <section class="tab-content active" id="tab-home">
             <div class="hero-section">
                 <div class="hero-pill">
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="12 8 8 12 12 16 16 12 12 8"></polygon></svg>
-                    Expanded Gallery &bull; 14 Historical Masterpieces
+                    Academic Course Portfolio &bull; 21LEM301T Indian Art Form
                 </div>
                 <h2 class="hero-title">Chronicles of Indian Art</h2>
                 <p class="hero-description">
-                    Welcome to the comprehensive digital museum celebrating 4,500 years of artistic genius across India — from prehistoric Harappan metallurgy and Mauryan polished sandstone to Gupta frescoes, Pallava coastal reliefs, Ellora monoliths, Chola bronzes, Khajuraho nagara temples, Konark stone chariots, Vijayanagara architecture, Thanjavur gold foil icons, and Mughal & Rajput court miniatures.
+                    A comprehensive digital academic portal celebrating 4,500 years of classical Indian artistic genius. Explore an interactive 14-masterpiece chronological timeline, a geospatial heritage origin map, Ajanta Cave mural narratives, Mahabalipuram monolithic sculpture analysis, and regional folk-classical fusion paintings.
                 </p>
 
-                <!-- Direct Activity Launchers -->
-                <div class="launch-grid">
-                    <div class="launch-card" id="launchActivity1">
+                <!-- 5-Card Academic Project Launch Grid -->
+                <div class="launch-grid-5">
+                    <!-- Project 1 -->
+                    <div class="launch-card-feature" id="launchP1">
                         <div>
-                            <span class="launch-badge">Activity 1 &bull; 14 Artworks</span>
-                            <h3>Historical Art Timeline</h3>
-                            <p>Explore an interactive chronological journey across 5 seminal artistic epochs (2500 BCE to 18th C. CE) with high-definition replicas, material insights, and historical context.</p>
+                            <div class="card-project-num">Project 1 &bull; CLA-I &bull; CO1 &bull; 10 Marks</div>
+                            <h3>Interactive Art Timeline</h3>
+                            <p>Chronological digital museum journey across 14 canonical Indian art masterpieces spanning 2500 BCE to 1760 CE with era filters and clickable virtual replicas with rich historical context.</p>
                         </div>
                         <div class="launch-action">
-                            <span>Explore Timeline (14 Items)</span>
+                            <span>Open Timeline (Project 1)</span>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                         </div>
                     </div>
 
-                    <div class="launch-card" id="launchActivity2">
+                    <!-- Project 2 -->
+                    <div class="launch-card-feature" id="launchP2">
                         <div>
-                            <span class="launch-badge">Activity 2 &bull; 14 Locations</span>
+                            <div class="card-project-num">Project 2 &bull; CLA-I &bull; CO1 &bull; 10 Marks</div>
                             <h3>Geographic Origin Map</h3>
-                            <p>Navigate a geospatial dark canvas map of India pinpointing 14 masterwork origins from Mohenjo-Daro, Sarnath, and Sanchi to Ajanta, Ellora, Konark, Thanjavur, and Kishangarh.</p>
+                            <p>Geospatial dark canvas map of India pinpointing 14 masterwork origins from Mohenjo-Daro, Sanchi, and Ajanta to Ellora, Konark, and Thanjavur with fly-to pills and slide-out inspection.</p>
                         </div>
                         <div class="launch-action">
-                            <span>Launch Geographic Map</span>
+                            <span>Launch Map (Project 2)</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </div>
+                    </div>
+
+                    <!-- Project 4 -->
+                    <div class="launch-card-feature" id="launchP4">
+                        <div>
+                            <div class="card-project-num">Project 4 &bull; CLA-II &bull; CO2 &bull; 10 Marks</div>
+                            <h3>Cave Paintings Storyboard</h3>
+                            <p>Visual narrative reimagining of the Mahajanaka Jataka from Ajanta Cave 1 into a four-panel graphic novel sequence exploring dilemma, shipwreck, struggle, and salvation.</p>
+                        </div>
+                        <div class="launch-action">
+                            <span>Open Storyboard (Project 4)</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </div>
+                    </div>
+
+                    <!-- Project 5 -->
+                    <div class="launch-card-feature" id="launchP5">
+                        <div>
+                            <div class="card-project-num">Project 5 &bull; CLA-II &bull; CO2 &bull; 10 Marks</div>
+                            <h3>Sculpture Thematic Analysis</h3>
+                            <p>In-depth academic paper and thematic analysis of the rock-cut sculptures of Mahabalipuram — examining the Descent of the Ganges bas-relief, Pancha Rathas, and pastoral realism.</p>
+                        </div>
+                        <div class="launch-action">
+                            <span>Explore Analysis (Project 5)</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </div>
+                    </div>
+
+                    <!-- Project 6 -->
+                    <div class="launch-card-feature" id="launchP6">
+                        <div>
+                            <div class="card-project-num">Project 6 &bull; CLA-I &bull; CO2 &bull; 10 Marks</div>
+                            <h3>Regional Art & Modern Fusion</h3>
+                            <p>Synthesizing regional Indian folk and classical styles (Warli-Kalamkari, Madhubani-Pattachitra, Gond-Tanjore) alongside S.H. Raza's meditative 'Bindu' modern recreation.</p>
+                        </div>
+                        <div class="launch-action">
+                            <span>View Fusion (Project 6)</span>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                         </div>
                     </div>
@@ -244,8 +169,8 @@
             <!-- Project Contributors / Made By Section -->
             <section class="team-section">
                 <div class="section-header">
-                    <h2>Project Developed By</h2>
-                    <p>Academic contributors behind the design, curation, and implementation of this portal</p>
+                    <h2>Academic Project Contributors</h2>
+                    <p>Department of Computing Technologies &bull; SRM Institute of Science and Technology &bull; 21LEM301T</p>
                 </div>
 
                 <div class="team-grid">
@@ -305,19 +230,24 @@
                     </div>
                 </div>
             </section>
-
-            <footer class="app-footer">
-                <p>BHĀRATA KALĀ &bull; Academic Project Submission &bull; Designed with <strong>Liquid Glass Aesthetics</strong></p>
-            </footer>
         </section>
 
         <!-- ================================================================
-             VIEW 2: ACTIVITY 1 - INDIAN ART HISTORY TIMELINE
+             VIEW 2: PROJECT 1 - INTERACTIVE TIMELINE WITH ARTIFACTS
              ================================================================ -->
         <section class="tab-content" id="tab-timeline">
-            <div class="timeline-header">
-                <h2>Timeline of Indian Art</h2>
-                <p>Chronological gallery of 14 monumental artifacts across four millennia</p>
+            <div class="project-hero">
+                <div class="project-badges-row">
+                    <span class="badge-tag badge-gold">Project 1</span>
+                    <span class="badge-tag badge-purple">CLA-I Assignment 1</span>
+                    <span class="badge-tag badge-blue">CO1 &bull; 10 Marks</span>
+                    <span class="badge-tag badge-gold">Curated Masterpieces: 14</span>
+                </div>
+                <h2 class="project-title">Project 1: Interactive Timeline with Artifacts</h2>
+                <div class="project-subtitle">Chronological Digital Museum Across Five Monumental Epochs (2500 BCE &ndash; 1760 CE)</div>
+                <div class="project-desc-box">
+                    <strong>Curatorial Overview:</strong> A comprehensive chronological digital museum tracing the stylistic, material, and philosophical evolution of Indian art across five monumental epochs. Features 14 canonical artifacts—from Harappan bronze-casting and Mauryan polished sandstone to classical Gupta-Vakataka murals, Chola lost-wax bronzes, and Rajput court miniatures—with detailed iconographical, material, and provenance analyses.
+                </div>
             </div>
 
             <!-- Era Filter Pills -->
@@ -334,21 +264,17 @@
             <div class="timeline-container" id="timelineList">
                 <!-- Dynamically populated by app.js -->
             </div>
-
-            <footer class="app-footer">
-                <p>Activity 1 &bull; Indian Art History Timeline &bull; Click any artifact card to inspect replica details</p>
-            </footer>
         </section>
 
         <!-- ================================================================
-             VIEW 3: ACTIVITY 2 - GEOGRAPHIC ART MAP (LEAFLET)
+             VIEW 3: PROJECT 2 - INTERACTIVE ART MAP
              ================================================================ -->
         <section class="tab-content" id="tab-map">
             <div class="map-view-container">
                 <!-- Overlay title -->
                 <div class="map-header-overlay">
-                    <h2>Indian Art Map</h2>
-                    <p>Geographic origins of 14 historical masterpieces across the Indian subcontinent</p>
+                    <h2>Project 2: Interactive Art Map</h2>
+                    <p>CLA-I Assignment 2 (10 Marks &bull; CO1) &bull; Geographic origins of 14 historical masterpieces across India</p>
                 </div>
 
                 <!-- Quick Location Fly-to Pills -->
@@ -393,16 +319,580 @@
                         <div id="mapArtDesc">Description</div>
                         <button class="btn-bridge" id="sidebarToTimelineBtn">
                             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                            <span>Inspect in Art Timeline</span>
+                            <span>Inspect in Art Timeline (Project 1)</span>
                         </button>
                     </div>
                 </aside>
             </div>
         </section>
+
+        <!-- ================================================================
+             VIEW 4: PROJECT 4 - CAVE PAINTINGS STORYBOARD
+             ================================================================ -->
+        <section class="tab-content" id="tab-project4">
+            <div class="project-hero">
+                <div class="project-badges-row">
+                    <span class="badge-tag badge-gold">Project 4</span>
+                    <span class="badge-tag badge-purple">CLA-II Assignment 1</span>
+                    <span class="badge-tag badge-blue">CO2 &bull; 10 Marks</span>
+                    <span class="badge-tag badge-gold">Team Size: 5</span>
+                </div>
+                <h2 class="project-title">Project 4: Cave Paintings Storyboard (The Mahajanaka Jataka)</h2>
+                <div class="project-subtitle">Translating Ajanta Cave 1 Mural Masterpieces into a Sequential Visual Narrative</div>
+                <div class="project-desc-box">
+                    <strong>Curatorial Synopsis:</strong> A sequential visual narrative reconstructing the iconic 5th-century CE murals of Ajanta Cave 1. Interprets the moral and philosophical journey of <em>The Mahajanaka Jataka</em> (Jataka No. 539) across four cinematic narrative panels, accompanied by character dialogues, iconographic scene analyses, and traditional tempera pigment material studies.
+                </div>
+            </div>
+
+            <!-- Storyboard Strip (4 Panels) -->
+            <div class="storyboard-strip">
+                <!-- Panel 1 -->
+                <div class="storyboard-card">
+                    <div class="storyboard-thumb-wrap" data-img="storyboard_panels/panel-1.png" data-title="Panel 1 – The Prince's Dilemma" data-caption="Prince Mahajanaka of Mithila resolves to embark on a perilous voyage across the ocean to Suvarnabhumi to reclaim his kingdom's fortune. Despite the heartfelt pleas of Queen Sivali and the royal ministers, his sense of duty and righteous ambition impel him toward the uncharted seas.">
+                        <span class="panel-badge">Panel 1</span>
+                        <img src="storyboard_panels/panel-1.png" alt="Panel 1: The Prince's Dilemma" loading="lazy">
+                        <span class="zoom-hint-pill"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Click to Zoom</span>
+                    </div>
+                    <div class="storyboard-body">
+                        <h4 class="storyboard-panel-title">1. The Prince's Dilemma</h4>
+                        <p class="storyboard-narrative">Prince Mahajanaka decides to travel by sea in pursuit of wealth, unaware of the impending oceanic perils. Clad in royal vestments, he stands steadfast in his conviction to restore prosperity to Mithila.</p>
+                        <div class="storyboard-art-notes">
+                            <strong>Ajanta Reference:</strong> Inspired by Cave 1 courtly scenes; graceful tribhanga stance, jeweled mukuta crown, and intricate hand mudras conveying contemplative resolve.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panel 2 -->
+                <div class="storyboard-card">
+                    <div class="storyboard-thumb-wrap" data-img="storyboard_panels/panel-2.png" data-title="Panel 2 – The Shipwreck" data-caption="On the seventh day of the sea voyage, a ferocious oceanic storm shatters the vessel. As the timber hull breaks apart amidst colossal swells, panic engulfs the crew. While others weep and pray to sea gods, the Prince consumes sustaining sweets and prepares his leap.">
+                        <span class="panel-badge">Panel 2</span>
+                        <img src="storyboard_panels/panel-2.png" alt="Panel 2: The Shipwreck" loading="lazy">
+                        <span class="zoom-hint-pill"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Click to Zoom</span>
+                    </div>
+                    <div class="storyboard-body">
+                        <h4 class="storyboard-panel-title">2. The Oceanic Shipwreck</h4>
+                        <p class="storyboard-narrative">The ship sinks in the middle of the violent ocean. While his crew collapses in terror, the prince struggles with absolute determination to survive, leaping far into the waters.</p>
+                        <div class="storyboard-art-notes">
+                            <strong>Ajanta Reference:</strong> Echoes Cave 17 & 1 shipwreck murals; dynamic churning water currents rendered in mineral pigments showing the turbulence of worldly samsara.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panel 3 -->
+                <div class="storyboard-card">
+                    <div class="storyboard-thumb-wrap" data-img="storyboard_panels/panel-3.png" data-title="Panel 3 – Struggle for Survival" data-caption="For seven grueling days and nights, Mahajanaka swims through treacherous waters under a storm-swept sky. He maintains the sacred Uposatha vows of spiritual purity, refusing to succumb to exhaustion or despair, personifying the Bodhisattva's boundless perseverance (viriya-paramita).">
+                        <span class="panel-badge">Panel 3</span>
+                        <img src="storyboard_panels/panel-3.png" alt="Panel 3: Struggle for Survival" loading="lazy">
+                        <span class="zoom-hint-pill"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Click to Zoom</span>
+                    </div>
+                    <div class="storyboard-body">
+                        <h4 class="storyboard-panel-title">3. Struggle for Survival</h4>
+                        <p class="storyboard-narrative">For days, Mahajanaka swims tirelessly through the endless blue abyss, holding onto his unshakeable faith, inner strength, and moral virtue.</p>
+                        <div class="storyboard-art-notes">
+                            <strong>Ajanta Reference:</strong> Depicts the Bodhisattva's inner radiance against external darkness; deep lapis lazuli and carbon black tonalities framing solitary human courage.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panel 4 -->
+                <div class="storyboard-card">
+                    <div class="storyboard-thumb-wrap" data-img="storyboard_panels/panel-4.png" data-title="Panel 4 – Divine Intervention" data-caption="Witnessing his supreme spiritual fortitude, the guardian sea-goddess Manimekhala descends in radiant divine light. She proclaims that one who strives with a noble heart shall never perish, scooping the exhausted prince from the waves and flying him safely to Mithila.">
+                        <span class="panel-badge">Panel 4</span>
+                        <img src="storyboard_panels/panel-4.png" alt="Panel 4: Divine Intervention" loading="lazy">
+                        <span class="zoom-hint-pill"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Click to Zoom</span>
+                    </div>
+                    <div class="storyboard-body">
+                        <h4 class="storyboard-panel-title">4. Divine Intervention</h4>
+                        <p class="storyboard-narrative">The goddess Manimekhala rescues the exhausted prince from the depths, symbolizing divine grace, spiritual triumph, and righteous perseverance.</p>
+                        <div class="storyboard-art-notes">
+                            <strong>Ajanta Reference:</strong> Modeled after the celestial apsaras and Bodhisattva Padmapani of Cave 1; ethereal floating gossamer drapery and compassionate downward gaze.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deep Dive Analysis Section -->
+            <div class="deep-dive-section">
+                <h3 class="section-subhead">Ajanta Mural Techniques & Storyboard Translation</h3>
+                <div class="grid-3-col">
+                    <div class="analysis-glass-card">
+                        <h4>
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            Continuous Narrative in Ajanta
+                        </h4>
+                        <p>
+                            Ajanta's ancient masters did not enclose scenes in rectangular comic frames. Instead, they employed <em>continuous narration</em> (synoptic narrative) across continuous rock-cut walls. Multiple temporal stages of Mahajanaka's life — his departure, shipwreck, ocean ordeal, and rescue — co-existed harmoniously within continuous architectural settings and landscape elements. Our storyboard reinterprets this classical compositional fluidity into discrete, high-impact sequential panels suited for modern visual storytelling.
+                        </p>
+                    </div>
+
+                    <div class="analysis-glass-card">
+                        <h4>
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                            Fresco Secco / Tempera Execution
+                        </h4>
+                        <p>
+                            Unlike European wet fresco (buon fresco), Ajanta murals are <strong>tempera paintings on dry mud plaster</strong> (secco). The volcanic basalt rock walls were layered with mud, ferruginous clay, cow dung, and rice husks, smoothed with fine lime wash (chunam). Pigments mixed with organic animal glue binders were applied on the dry surface, allowing extraordinarily refined gradient blending, expressive almond eyes, and three-dimensional bodily volume.
+                        </p>
+                    </div>
+
+                    <div class="analysis-glass-card">
+                        <h4>
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
+                            Philosophical & Symbolic Depth
+                        </h4>
+                        <p>
+                            The Mahajanaka Jataka is not merely a tale of physical survival; it is an allegorical exposition of <em>Viriya Paramita</em> (perfection of energetic perseverance). The turbulent sea signifies the ocean of worldly suffering (samsara), the shipwreck represents unexpected karmic tribulations, and Manimekhala's intervention exemplifies the law that cosmic grace rewards relentless moral steadfastness.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Mineral Pigment Palette of Ajanta -->
+                <div style="margin-top: 36px;">
+                    <h3 class="section-subhead">Classical Ajanta Mineral Pigment Palette</h3>
+                    <div class="pigment-palette-grid">
+                        <div class="pigment-card">
+                            <div class="pigment-dot" style="background: #1e3a8a;"></div>
+                            <div class="pigment-info">
+                                <h5>Lapis Lazuli</h5>
+                                <span>Imported Badakhshan &bull; Celestial Blue</span>
+                            </div>
+                        </div>
+                        <div class="pigment-card">
+                            <div class="pigment-dot" style="background: #991b1b;"></div>
+                            <div class="pigment-info">
+                                <h5>Red Ochre (Gairika)</h5>
+                                <span>Ferric Deccan Earth &bull; Warm Contour</span>
+                            </div>
+                        </div>
+                        <div class="pigment-card">
+                            <div class="pigment-dot" style="background: #d97706;"></div>
+                            <div class="pigment-info">
+                                <h5>Yellow Ochre (Haritala)</h5>
+                                <span>Natural Clay &bull; Royal Ornaments</span>
+                            </div>
+                        </div>
+                        <div class="pigment-card">
+                            <div class="pigment-dot" style="background: #15803d;"></div>
+                            <div class="pigment-info">
+                                <h5>Terre Verte</h5>
+                                <span>Green Silicate Earth &bull; Foliage</span>
+                            </div>
+                        </div>
+                        <div class="pigment-card">
+                            <div class="pigment-dot" style="background: #f8fafc;"></div>
+                            <div class="pigment-info">
+                                <h5>Kaolin & Gypsum</h5>
+                                <span>Purified Chalk &bull; Highlights & Chunam</span>
+                            </div>
+                        </div>
+                        <div class="pigment-card">
+                            <div class="pigment-dot" style="background: #0f172a;"></div>
+                            <div class="pigment-info">
+                                <h5>Lamp Black (Kajal)</h5>
+                                <span>Vegetal Soot &bull; Expressive Outlines</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================
+             VIEW 5: PROJECT 5 - SCULPTURE THEMATIC ANALYSIS
+             ================================================================ -->
+        <section class="tab-content" id="tab-project5">
+            <div class="project-hero">
+                <div class="project-badges-row">
+                    <span class="badge-tag badge-gold">Project 5</span>
+                    <span class="badge-tag badge-purple">CLA-II Assignment 2</span>
+                    <span class="badge-tag badge-blue">CO2 &bull; 10 Marks</span>
+                    <span class="badge-tag badge-gold">Format: Academic Research Paper</span>
+                </div>
+                <h2 class="project-title">Project 5: Sculpture Thematic Analysis (Mahabalipuram)</h2>
+                <div class="project-subtitle">Themes, Iconography, and Religious-Cultural Significance of Rock-Cut Sculptures</div>
+                <div class="project-desc-box">
+                    <strong>Scholarly Focus:</strong> A rigorous thematic and iconographical investigation into the 7th-century CE rock-cut monuments of Mahabalipuram. Evaluates the theological synthesis of Shaivite and Vaishnavite narratives, the architectural evolution from pillared cave mandapas to monolithic rathas, the symbolic interplay of royal Pallava sovereignty with cosmic myths, and the enduring stylistic legacy across South and Southeast Asian sacred architecture.
+                </div>
+                <div style="margin-top: 14px;">
+                    <a href="Project 5 - Mahabalipuram Sculpture Thematic Analysis.docx" download class="filter-btn active" style="text-decoration:none; display:inline-flex; align-items:center; gap:8px; padding:10px 18px; font-weight:700;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Download Submission Paper (.DOCX &bull; 7 Pages)
+                    </a>
+                </div>
+            </div>
+
+            <!-- Interactive Chapters Accordion -->
+            <div class="chapter-accordion">
+                <!-- Chapter 1 -->
+                <div class="chapter-card">
+                    <div class="chapter-num">Chapter I</div>
+                    <h3 class="chapter-title">Introduction & The Pallava Rock-Cut Landscape</h3>
+                    <div class="chapter-content">
+                        <p>
+                            Mahabalipuram (Mamallapuram), situated on the wind-swept Coromandel Coast of Tamil Nadu, represents one of the most astonishing monumental achievements in ancient South Asian art. Under the visionary patronage of the <strong>Pallava dynasty</strong> — predominantly King Mahendravarman I (r. 600–630 CE) and his son Narasimhavarman I 'Mamalla' (r. 630–668 CE) — granitic coastal boulders and whaleback ridges were systematically sculpted into cave temples, freestanding monolithic shrines, and towering narrative reliefs.
+                        </p>
+                        <p>
+                            Inscribed as a <strong>UNESCO World Heritage Site in 1984</strong>, Mahabalipuram served not only as a sacred pilgrimage center but as a pivotal mercantile harbor along the Indian Ocean maritime silk routes connecting South India to Sri Lanka, Java, Sumatra, and the Khmer Empire. The site exhibits four distinct structural categories: (1) <em>Mandapas</em> (pillared rock-cut cave temples), (2) <em>Rathas</em> (monolithic free-standing shrines carved top-down from single granite outcrops), (3) <em>Open-air Bas-Reliefs</em> (cliff-face narrative friezes), and (4) <em>Structural Temples</em> (such as the maritime Shore Temple).
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Chapter 2 -->
+                <div class="chapter-card">
+                    <div class="chapter-num">Chapter II</div>
+                    <h3 class="chapter-title">The Epic Bas-Relief: Descent of the Ganges (Arjuna's Penance)</h3>
+                    <div class="chapter-content">
+                        <p>
+                            Spanning an astounding 96 feet in length and 43 feet in height across two colossal natural granite boulders, the <strong>Descent of the Ganges</strong> (also known as <em>Arjuna's Penance</em>) is the world's largest open-air rock relief. Pallava artisans ingeniously utilized the natural vertical cleft separating the two boulders to represent the cosmic descent of the sacred river Ganga from the celestial heavens to sanctify the earthly plane.
+                        </p>
+
+                        <!-- Key Motifs Breakdown -->
+                        <div class="key-motif-callout">
+                            <h5>Iconographic Anatomy of Key Motifs</h5>
+                            <div class="motif-list">
+                                <div class="motif-item">
+                                    <span>The Central River Cleft & Nagas</span>
+                                    Water channeled through the vertical fissure during monsoon rituals; populated by the serpentine King Nagaraja and his queen Nagini with folded hands, mediating between subterranean and heavenly realms.
+                                </div>
+                                <div class="motif-item">
+                                    <span>The Emaciated Ascetic (Tapasya)</span>
+                                    Standing on one leg with arms raised overhead in intense penance (Urdhvamukha), interpreted either as King Bhagiratha entreating Ganga or Arjuna seeking the Pasupatastra weapon from Shiva.
+                                </div>
+                                <div class="motif-item">
+                                    <span>Lord Shiva Granting the Boon</span>
+                                    The four-armed deity stands adjacent to the ascetic, accompanied by dwarf ganas, extending his lower right hand in the varada (boon-bestowing) mudra while brandishing the battle axe.
+                                </div>
+                                <div class="motif-item">
+                                    <span>The Satirical Penitent Cat</span>
+                                    A witty folk vignette showing a deceptive cat performing penance while gullible mice dance at its feet, based on the Panchatantra moral fable against sanctimonious hypocrites.
+                                </div>
+                                <div class="motif-item">
+                                    <span>The Realistic Elephant Herd</span>
+                                    A colossal bull elephant followed by a maternal cow and two playful calves nestling beneath its legs, celebrated globally for its tender anatomical realism and familial warmth.
+                                </div>
+                                <div class="motif-item">
+                                    <span>Celestial Kinnaras & Flying Gandharvas</span>
+                                    Over a hundred divine beings, celestials, hermits, and forest animals converging toward the central cleft in reverent jubilation to celebrate the cosmic waters.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Motifs Diagram Feature Box -->
+                        <div class="diagram-featured-box">
+                            <div class="diagram-image-wrap" data-img="fusion_images/descent-motifs-diagram.png" data-title="Key Motifs in the Descent of the Ganges Bas-Relief" data-caption="Architectural and iconographical schematic mapping the central cleft (Ganges), Shiva's boon, the meditating ascetic, ascending nagas, the satirical cat, and the elephant herd in the Mamallapuram relief.">
+                                <img src="fusion_images/descent-motifs-diagram.png" alt="Descent of the Ganges Motifs Diagram" loading="lazy">
+                            </div>
+                            <div>
+                                <h4 style="color:var(--gold-light); font-size:1.15rem; margin-bottom:10px;">Narrative Synthesis of the Relief</h4>
+                                <p style="font-size:13.5px; line-height:1.6; color:var(--text-dim); margin-bottom:12px;">
+                                    The brilliance of this relief lies in its polysemic ambiguity — simultaneously narrating <em>Bhagiratha's prayer</em> to wash away the ashes of his ancestors and <em>Arjuna's quest</em> in the Mahabharata. By uniting wild fauna, domestic pastoral life, ascetics, and cosmic gods, the monument asserts that the sacred pervades every crevice of nature.
+                                </p>
+                                <span class="badge-tag badge-gold">UNESCO Masterpiece &bull; 7th Century CE</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chapter 3 -->
+                <div class="chapter-card">
+                    <div class="chapter-num">Chapter III</div>
+                    <h3 class="chapter-title">Architectural Evolution: The Pancha Rathas</h3>
+                    <div class="chapter-content">
+                        <p>
+                            Located to the south of Mamallapuram, the <strong>Pancha Rathas</strong> (Five Chariots) are monolithic architectural prototypes carved directly from a single massive whaleback outcrop of granite. Dedicated to the five Pandava brothers and Draupadi from the Mahabharata, these shrines do not represent functional temples (their sanctums were never consecrated) but served as experimental, life-sized architectural models in stone:
+                        </p>
+                        <p>
+                            &bull; <strong>Dharmaraja Ratha:</strong> The tallest and most ornate monolithic shrine, featuring a square plan, multi-tiered Dravidian vimana (pyramidal tower), octagonal shikhara, and carved royal portraits of Narasimhavarman I flanked by dvarapalas.<br>
+                            &bull; <strong>Bhima Ratha:</strong> A massive rectangular pavilion characterized by an elongated barrel-vaulted roof (<em>sala-shikhara</em>) inspired by ancient wooden Buddhist chaitya assembly halls, supported by seated lion pillars.<br>
+                            &bull; <strong>Arjuna Ratha:</strong> A two-tiered square vimana mirroring the Dharmaraja Ratha with masterfully carved niches depicting Shiva, Vishnu, Indra on Airavata, and graceful courtly couples.<br>
+                            &bull; <strong>Draupadi Ratha:</strong> The smallest shrine, designed as a simple village thatched hut with curved Bengali <em>bangala</em> roof eaves, dedicated to Goddess Durga whose idol is flanked by kneeling devotees.<br>
+                            &bull; <strong>Nakula-Sahadeva Ratha:</strong> Features an apsidal (horseshoe-shaped) vimana known as <em>gajaprishta</em> (elephant's backside), standing alongside a life-sized monolithic granite elephant.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Chapter 4 -->
+                <div class="chapter-card">
+                    <div class="chapter-num">Chapter IV</div>
+                    <h3 class="chapter-title">Cave Sanctuaries & Dramatic Reliefs</h3>
+                    <div class="chapter-content">
+                        <p>
+                            Inside the pillared cave mandapas, Pallava sculptors achieved extraordinary compositional drama and emotional tension. In the <strong>Mahishasuramardini Cave</strong>, the relief of Goddess Durga vanquishing the buffalo demon Mahishasura is hailed as a zenith of classical Indian sculpture. Riding a ferocious lion, the eight-armed Durga lunges forward with bow drawn taut, exuding righteous serenity, while the colossal, armored buffalo demon staggers backward in imminent defeat.
+                        </p>
+                        <p>
+                            Opposite Durga, a complementary panel portrays <strong>Vishnu Anantasayana</strong> reclining in cosmic sleep upon the coiled serpent Adishesha, peacefully dreaming the cosmos into existence while demons Madhu and Kaitabha hesitate in awe. In the <strong>Varaha Cave</strong>, Vishnu's boar avatar Varaha strides vigorously from the cosmic waters, gently lifting the delicate earth goddess Bhudevi upon his right arm — symbolizing divine restoration and the king's role as protector.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Chapter 5 -->
+                <div class="chapter-card">
+                    <div class="chapter-num">Chapter V</div>
+                    <h3 class="chapter-title">Synthesis of the Natural and the Divine: Pastoral Realism</h3>
+                    <div class="chapter-content">
+                        <p>
+                            A striking divergence from rigid courtly iconography at Mahabalipuram is the celebration of rural, pastoral intimacy. In the <strong>Krishna Mandapa</strong>, Lord Krishna is depicted lifting Mount Govardhana on the tip of his finger to shelter the cowherds and cattle of Vrindavan from Indra's torrential storm.
+                        </p>
+                        <p>
+                            Beneath the mountain, the sculptor captures everyday agrarian life with profound tenderness: a cowherd milkman sitting on his haunches milking a cow while the mother cow lovingly licks her newborn calf; a village woman balancing milk pots on her head; a woodcutter with an axe; and an old grandfather carrying a child on his shoulders. This humanistic portrayal anticipates the democratic, emotionally accessible spirit of the emerging <strong>Bhakti movement</strong> in early medieval Tamilakam.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Chapter 6 -->
+                <div class="chapter-card">
+                    <div class="chapter-num">Chapter VI</div>
+                    <h3 class="chapter-title">Political Legitimacy, Royal Patronage & Maritime Legacy</h3>
+                    <div class="chapter-content">
+                        <p>
+                            Beyond their religious sanctity, Mahabalipuram's monuments functioned as potent imperial proclamations. King Narasimhavarman I adopted the title <em>Mamalla</em> ('Great Wrestler') following his triumphant sack of the Western Chalukyan capital of Vatapi (Badami) in 642 CE. The divine rescue themes (Varaha lifting Bhudevi, Krishna sheltering the cowherds, Durga vanquishing Mahishasura) served as royal allegories portraying the Pallava monarch as an earthly savior of his subjects.
+                        </p>
+                        <p>
+                            As a bustling maritime trade emporium, foreign merchants from China, Rome, and Southeast Asia disembarked at Mamallapuram's shores. The towering rock-cut reliefs and the maritime <strong>Shore Temple</strong> (built by Narasimhavarman II Rajasimha in the 8th Century) acted as colossal cultural beacons visible from passing merchant vessels, broadcasting the aesthetic opulence and religious cosmopolitanism of the Pallava realm across the Bay of Bengal.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Chapter 7 -->
+                <div class="chapter-card">
+                    <div class="chapter-num">Chapter VII</div>
+                    <h3 class="chapter-title">Artistic, Religious & Cultural Legacy</h3>
+                    <div class="chapter-content">
+                        <p>
+                            The experimental genius of Mahabalipuram laid the bedrock for South Indian temple architecture for the next millennium. Its innovative column capitals carved with seated vyalas (lions), multi-tiered pyramidal vimanas, and barrel-vaulted salas directly shaped the architectural vocabulary of the <strong>Imperial Cholas</strong> (Brihadisvara at Thanjavur), the <strong>Hoysalas</strong>, and the <strong>Vijayanagara Empire</strong> at Hampi.
+                        </p>
+                        <p>
+                            Through maritime cultural diffusion, Pallava sculptural sensibilities migrated across Southeast Asia, noticeably influencing early Hindu-Buddhist stone sanctuaries in Champa (Vietnam), Angkor (Cambodia), and Java (Prambanan). Mahabalipuram remains an eternal testament to how human devotion, royal ambition, and granite cliffs converged into timeless artistic heritage.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- High-Resolution Photo Gallery of Mahabalipuram -->
+            <div class="deep-dive-section">
+                <h3 class="section-subhead">Monumental Gallery: Mahabalipuram Photographic Survey</h3>
+                <p style="color:var(--text-dim); font-size:14px; margin-bottom:14px;">Click any monument photograph to inspect architectural detailing and high-resolution stone craftsmanship.</p>
+                
+                <div class="gallery-grid">
+                    <div class="gallery-card" data-img="mahabalipuram_images/maha-overview.png" data-title="Pancha Rathas Monolithic Shrines" data-caption="Panoramic view of the Five Monolithic Rathas carved top-down from a single diorite ridge in the 7th century under Narasimhavarman I Mamalla.">
+                        <div class="gallery-thumb-box">
+                            <img src="mahabalipuram_images/maha-overview.png" alt="Pancha Rathas Monoliths" loading="lazy">
+                        </div>
+                        <div class="gallery-caption">
+                            Pancha Rathas Monolithic Shrines
+                            <span>Mamallapuram &bull; Dravidian Vimana Archetype</span>
+                        </div>
+                    </div>
+
+                    <div class="gallery-card" data-img="mahabalipuram_images/maha-descent.png" data-title="Descent of the Ganges Open-Air Cliff" data-caption="World's largest open-air granite bas-relief (96 ft x 43 ft) depicting celestial beings, rishis, nagas, and animals gathering at the sacred river cleft.">
+                        <div class="gallery-thumb-box">
+                            <img src="mahabalipuram_images/maha-descent.png" alt="Descent of the Ganges" loading="lazy">
+                        </div>
+                        <div class="gallery-caption">
+                            Descent of the Ganges (Arjuna's Penance)
+                            <span>Granite Cliff Relief &bull; 7th Century CE</span>
+                        </div>
+                    </div>
+
+                    <div class="gallery-card" data-img="mahabalipuram_images/maha-ratha.png" data-title="Dharmaraja Ratha Monolithic Vimana" data-caption="Three-tiered pyramidal vimana with octagonal shikhara, seated lion pillars, and sculpted royal portraiture of Pallava kings.">
+                        <div class="gallery-thumb-box">
+                            <img src="mahabalipuram_images/maha-ratha.png" alt="Dharmaraja Ratha" loading="lazy">
+                        </div>
+                        <div class="gallery-caption">
+                            Dharmaraja Ratha Detail
+                            <span>Pyramidal Vimana &bull; Royal Inscriptions</span>
+                        </div>
+                    </div>
+
+                    <div class="gallery-card" data-img="mahabalipuram_images/maha-mandapa.png" data-title="Pillared Cave Temple (Mandapa)" data-caption="Rock-cut cave sanctuary supported by cushion capitals and lion pillars (vyala-stambha), showcasing early Dravidian column innovation.">
+                        <div class="gallery-thumb-box">
+                            <img src="mahabalipuram_images/maha-mandapa.png" alt="Cave Mandapa" loading="lazy">
+                        </div>
+                        <div class="gallery-caption">
+                            Rock-Cut Cave Mandapa Façade
+                            <span>Lion Capitals &bull; Granitic Cave Sanctuary</span>
+                        </div>
+                    </div>
+
+                    <div class="gallery-card" data-img="mahabalipuram_images/maha-elephants.png" data-title="Elephant Herd Monolith Detail" data-caption="Tenderly sculpted bull elephant, cow, and sheltering calves displaying exceptional naturalism and anatomical grace.">
+                        <div class="gallery-thumb-box">
+                            <img src="mahabalipuram_images/maha-elephants.png" alt="Elephant Herd Detail" loading="lazy">
+                        </div>
+                        <div class="gallery-caption">
+                            Elephant Family Relief Sculpture
+                            <span>Anatomical Naturalism &bull; Bas-Relief</span>
+                        </div>
+                    </div>
+
+                    <div class="gallery-card" data-img="mahabalipuram.jpg" data-title="The Coastal Shore Temple" data-caption="Early structural stone temple standing on the Bay of Bengal coast, built by Narasimhavarman II Rajasimha circa 700 CE.">
+                        <div class="gallery-thumb-box">
+                            <img src="mahabalipuram.jpg" alt="Shore Temple" loading="lazy">
+                        </div>
+                        <div class="gallery-caption">
+                            Shore Temple at Mamallapuram
+                            <span>Structural Granite &bull; Coastal Heritage</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================
+             VIEW 6: PROJECT 6 - REGIONAL PAINTING FUSION & MODERN HERITAGE
+             ================================================================ -->
+        <section class="tab-content" id="tab-project6">
+            <div class="project-hero">
+                <div class="project-badges-row">
+                    <span class="badge-tag badge-gold">Project 6</span>
+                    <span class="badge-tag badge-purple">CLA-I Assignment 3</span>
+                    <span class="badge-tag badge-blue">CO2 / CO5 &bull; 10 Marks</span>
+                    <span class="badge-tag badge-gold">Team Size: 5</span>
+                </div>
+                <h2 class="project-title">Project 6: Regional Painting Fusion Project & Modern Heritage</h2>
+                <div class="project-subtitle">Harmonizing Indigenous Tribal Traditions with Classical Aesthetics & Contemporary Modernism</div>
+                <div class="project-desc-box">
+                    <strong>Artistic & Scholarly Premise:</strong> An experimental synthesis bridging diverse regional Indian painting traditions—exploring visual dialogue between tribal geometric minimalism and sacred temple narrative scrolls (Warli & Kalamkari), folk line rhythm and monumental mythological iconography (Madhubani & Pattachitra), and vibrant forest animism with opulent gilded relief (Gond & Tanjore), crowned by modern geometric abstraction through S.H. Raza's meditative <em>Bindu</em>.
+                </div>
+                <div style="margin-top: 14px; display: flex; gap: 12px; flex-wrap: wrap;">
+                    <a href="Project 6 - Regional Painting Fusion Poster.pdf" download class="filter-btn active" style="text-decoration:none; display:inline-flex; align-items:center; gap:8px; padding:10px 18px; font-weight:700;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Download Poster PDF (For Print &amp; Canva)
+                    </a>
+                    <a href="poster-p6.html" target="_blank" class="filter-btn" style="text-decoration:none; display:inline-flex; align-items:center; gap:8px; padding:10px 18px; font-weight:700;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                        View Interactive Poster &rarr;
+                    </a>
+                </div>
+            </div>
+
+            <!-- Part A: Regional Painting Fusion Grid -->
+            <div class="deep-dive-section">
+                <h3 class="section-subhead">Part A: Regional Painting Fusion Masterpieces</h3>
+                <p style="color:var(--text-dim); font-size:14px; margin-bottom:20px;">
+                    Three distinct fusion works examining the dialogue between minimalism and ornamental intricacy, epic narrative traditions, and tribal animism blended with royal opulence.
+                </p>
+
+                <div class="fusion-card-grid">
+                    <!-- Fusion 1: Warli & Kalamkari -->
+                    <div class="fusion-card">
+                        <div class="fusion-image-box" data-img="fusion_images/warli-kalamkari.png" data-title="Fusion 1: Warli & Kalamkari" data-caption="Blends the geometric stick-figure motifs of Maharashtra's tribal Warli art with the ornamental floral borders and intricate line work of Andhra Pradesh's temple Kalamkari.">
+                            <img src="fusion_images/warli-kalamkari.png" alt="Warli and Kalamkari Fusion" loading="lazy">
+                        </div>
+                        <div class="fusion-content-box">
+                            <div class="fusion-header-tags">
+                                <span class="fusion-tag">Warli (Maharashtra)</span>
+                                <span class="fusion-tag">Kalamkari (Andhra Pradesh)</span>
+                            </div>
+                            <h4 class="fusion-title">1. Fusion of Warli & Kalamkari</h4>
+                            <p class="fusion-description">
+                                This artwork blends the geometric stick-figure motifs of Warli art with the ornamental floral borders and intricate line work of Kalamkari. The human figures are simple, linear, and white on a dark rustic ground, while the surrounding decorative vine patterns and mythological elements reflect Kalamkari's narrative storytelling.
+                            </p>
+                            <div class="fusion-analysis">
+                                <strong>Aesthetic Synthesis:</strong> Highlights the contrast between minimalism and intricacy. Warli's basic geometric forms (circles, triangles, and lines) celebrate community agrarian life, while Kalamkari contributes mythological depth and organic floral complexity into a harmonious composition.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fusion 2: Madhubani & Pattachitra -->
+                    <div class="fusion-card">
+                        <div class="fusion-image-box" data-img="fusion_images/madhubani-pattachitra.png" data-title="Fusion 2: Madhubani & Pattachitra" data-caption="Combines Bihar's Madhubani bright primary colors and double-line borders with Odisha's Pattachitra naturalistic figures and mythological scrollwork.">
+                            <img src="fusion_images/madhubani-pattachitra.png" alt="Madhubani and Pattachitra Fusion" loading="lazy">
+                        </div>
+                        <div class="fusion-content-box">
+                            <div class="fusion-header-tags">
+                                <span class="fusion-tag">Madhubani (Bihar)</span>
+                                <span class="fusion-tag">Pattachitra (Odisha)</span>
+                            </div>
+                            <h4 class="fusion-title">2. Fusion of Madhubani & Pattachitra</h4>
+                            <p class="fusion-description">
+                                Merges Madhubani's bold primary colors, double-line borders, and almond-eyed stylized profiles with Pattachitra's graceful postures and mythological themes. Every fraction of space is decorated with floral infill, a signature shared between Mithila women's wall art and Odisha's cloth scroll painters.
+                            </p>
+                            <div class="fusion-analysis">
+                                <strong>Aesthetic Synthesis:</strong> Emphasizes their shared devotion to the epics (Ramayana and Gita Govinda). Madhubani's flat, symbolic vigor complements Pattachitra's smooth, razor-sharp black line work, creating a layered, jewel-toned visual rhythm.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fusion 3: Gond & Tanjore -->
+                    <div class="fusion-card">
+                        <div class="fusion-image-box" data-img="fusion_images/gond-tanjore.png" data-title="Fusion 3: Gond & Tanjore" data-caption="Fuses Gond tribal dotted textures and nature motifs with Tanjore's rich golden embellishments, gesso relief, and divine iconography.">
+                            <img src="fusion_images/gond-tanjore.png" alt="Gond and Tanjore Fusion" loading="lazy">
+                        </div>
+                        <div class="fusion-content-box">
+                            <div class="fusion-header-tags">
+                                <span class="fusion-tag">Gond (Madhya Pradesh)</span>
+                                <span class="fusion-tag">Tanjore (Tamil Nadu)</span>
+                            </div>
+                            <h4 class="fusion-title">3. Fusion of Gond & Tanjore</h4>
+                            <p class="fusion-description">
+                                Fuses Gond's tribal style of repetitive dotted textures and animated wildlife motifs with Thanjavur's (Tanjore) opulent 22-karat gold foil relief, semiprecious stones, and divine iconography. The central sacred subject is adorned with organic Gond line work inside a regal, gold-embossed classical frame.
+                            </p>
+                            <div class="fusion-analysis">
+                                <strong>Aesthetic Synthesis:</strong> Bridges folk animism with royal courtly opulence. Gond's organic patterns represent reverence for nature and spirits of the earth, while Tanjore's structured forms and gold leaf symbolize cosmic divinity, creating a stunning visual equilibrium.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Part B: Modern Artistic Recreation (S.H. Raza's Bindu) -->
+            <div class="pag-recreation-feature">
+                <div class="pag-feature-grid">
+                    <div class="pag-image-wrap" data-img="fusion_images/raza-bindu.png" data-title="Artistic Recreation: S.H. Raza's 'Bindu'" data-caption="Digital artistic recreation inspired by Syed Haider Raza's iconic 'Bindu' series, exploring cosmic geometry, the primordial point of creation, and meditative stillness.">
+                        <img src="fusion_images/raza-bindu.png" alt="Recreation of S.H. Raza's Bindu" loading="lazy">
+                    </div>
+                    <div class="pag-info-content">
+                        <div class="card-project-num" style="color:var(--gold); font-size:12px; margin-bottom:6px;">Part B &bull; Modernist Recreation & Comparative Essay</div>
+                        <h3>S. H. Raza's "Bindu" (Progressive Artists' Group)</h3>
+                        <p style="color:var(--text-dim); font-size:14px; line-height:1.65;">
+                            Syed Haider Raza (1922–2016), a founding member of the revolutionary <strong>Progressive Artists' Group (PAG)</strong> in Bombay, modernized Indian art by integrating European abstraction with ancient Vedic and Tantric philosophical concepts.
+                        </p>
+                        <div class="pag-quote-box">
+                            "The Bindu is the source of all energy, time, space, and consciousness — the seed from which the entire visible cosmos emerges and into which it ultimately collapses." &mdash; S. H. Raza
+                        </div>
+                        <p style="color:var(--text-dim); font-size:13.5px; line-height:1.6;">
+                            Our student digital recreation honors Raza's geometric discipline. Centered on the dense black circular point surrounded by radiating orange, crimson, cobalt, and ochre triangles, the work explores meditation through structural balance, vibrant chromatic resonance, and pure non-representational form.
+                        </p>
+
+                        <table class="pag-comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Element</th>
+                                    <th>Raza's Original Masterwork</th>
+                                    <th>Student Digital Recreation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Medium</strong></td>
+                                    <td>Heavy acrylic / oil impasto on textured canvas</td>
+                                    <td>High-precision vector & digital pigment brushwork</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Surface Texture</strong></td>
+                                    <td>Organic, visible rhythmic brushstrokes with depth</td>
+                                    <td>Crisp geometric edges, flat luminous color fields</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Emotional Tone</strong></td>
+                                    <td>Decades of internalized yogic meditation</td>
+                                    <td>Analytical study of sacred geometry and color theory</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Cosmic Core</strong></td>
+                                    <td>Pulsating black void as infinite potential</td>
+                                    <td>Focal black Bindu ringed with warm solar saffron</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 
     <!-- ====================================================================
-         TIMELINE ARTIFACT INSPECT MODAL
+         TIMELINE ARTIFACT INSPECT MODAL (PROJECT 1)
          ==================================================================== -->
     <div id="artifactModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
         <div class="modal-content">
@@ -426,9 +916,27 @@
                     <div id="modalDescription"></div>
                     <button class="btn-bridge" id="modalToMapBtn">
                         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon></svg>
-                        <span>Locate on Geographic Map</span>
+                        <span>Locate on Geographic Map (Project 2)</span>
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         UNIVERSAL HIGH-RESOLUTION LIGHTBOX MODAL (PROJECTS 4, 5, 6)
+         ==================================================================== -->
+    <div id="projectLightboxModal" class="project-lightbox" role="dialog" aria-modal="true">
+        <div class="project-lightbox-content">
+            <div class="project-lightbox-header">
+                <h3 id="lightboxTitle">Artwork Preview</h3>
+                <button class="close-lightbox-btn" id="closeLightboxBtn" aria-label="Close lightbox">&times;</button>
+            </div>
+            <div class="project-lightbox-img-wrap">
+                <img id="lightboxImage" src="" alt="Enlarged Artwork">
+            </div>
+            <div class="project-lightbox-caption" id="lightboxCaption">
+                Caption
             </div>
         </div>
     </div>

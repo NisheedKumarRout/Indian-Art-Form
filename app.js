@@ -355,252 +355,12 @@
     }
 
     // =========================================================================
-    // 3. LIQUID GLASS AUTHENTICATION SYSTEM (HARDCODED AUTH)
+    // 3. MAIN PORTAL INITIALIZATION (DIRECT ACCESS - NO LOGIN REQUIRED)
     // =========================================================================
-    const HARDCODED_EMAIL = 'nisheedkumarrout@gmail.com';
-    const HARDCODED_PASS = '1234';
-
-    const authScreen = document.getElementById('authScreen');
     const appPortal = document.getElementById('appPortal');
-    const loginView = document.getElementById('loginView');
-    const signupView = document.getElementById('signupView');
-    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    function switchAuthView(fromView, toView) {
-        if (!fromView || !toView) return;
-        fromView.classList.remove('view-active');
-        fromView.classList.add('view-hidden');
-        toView.classList.remove('view-hidden');
-        toView.classList.add('view-active');
-        const input = toView.querySelector('input');
-        if (input) input.focus({ preventScroll: true });
+    if (appPortal) {
+        appPortal.classList.add('active');
     }
-
-    const toSignup = document.getElementById('toSignup');
-    const toLogin = document.getElementById('toLogin');
-    if (toSignup) toSignup.addEventListener('click', e => { e.preventDefault(); switchAuthView(loginView, signupView); });
-    if (toLogin) toLogin.addEventListener('click', e => { e.preventDefault(); switchAuthView(signupView, loginView); });
-
-    function attachRipple(button) {
-        button.addEventListener('click', function(e) {
-            const r = document.createElement('span');
-            r.className = 'ripple';
-            const rect = button.getBoundingClientRect();
-            const size = Math.max(rect.width, rect.height);
-            r.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX - rect.left - size/2}px;top:${e.clientY - rect.top - size/2}px`;
-            button.appendChild(r);
-            setTimeout(() => r.remove(), 600);
-        });
-    }
-    document.querySelectorAll('.btn-primary, .btn-demo').forEach(attachRipple);
-
-    document.querySelectorAll('.pw-toggle').forEach(toggle => {
-        toggle.addEventListener('click', () => {
-            const input = document.getElementById(toggle.dataset.target);
-            if (!input) return;
-            const eye = toggle.querySelector('.eye-icon');
-            const eyeOff = toggle.querySelector('.eye-off-icon');
-            const isPw = input.type === 'password';
-            input.type = isPw ? 'text' : 'password';
-            if (eye) eye.style.display = isPw ? 'none' : 'block';
-            if (eyeOff) eyeOff.style.display = isPw ? 'block' : 'none';
-        });
-    });
-
-    const signupPassword = document.getElementById('signupPassword');
-    const pwStrength = document.getElementById('pwStrength');
-    const pwStrengthBar = document.getElementById('pwStrengthBar');
-    if (signupPassword && pwStrength && pwStrengthBar) {
-        signupPassword.addEventListener('input', () => {
-            const val = signupPassword.value;
-            pwStrength.classList.toggle('visible', val.length > 0);
-            let score = 0;
-            if (val.length >= 6) score++;
-            if (val.length >= 10) score++;
-            if (/[A-Z]/.test(val)) score++;
-            if (/[0-9]/.test(val)) score++;
-            if (/[^A-Za-z0-9]/.test(val)) score++;
-            score = Math.min(score, 4);
-            const colors = ['#f87171', '#fb923c', '#facc15', '#34d399'];
-            const widths = ['20%', '45%', '70%', '100%'];
-            pwStrengthBar.style.width = widths[score] || '0%';
-            pwStrengthBar.style.background = colors[score] || colors[0];
-        });
-    }
-
-    function setInputStatus(input, status) {
-        if (!input) return;
-        input.classList.remove('error', 'success');
-        if (status) input.classList.add(status);
-    }
-
-    function shakeCard() {
-        if (!glassCard) return;
-        glassCard.classList.remove('shake');
-        void glassCard.offsetWidth;
-        glassCard.classList.add('shake');
-        setTimeout(() => glassCard.classList.remove('shake'), 450);
-    }
-
-    function grantAccess(userName) {
-        const nameToUse = userName || 'Nisheed Kumar Rout';
-        sessionStorage.setItem('bharata_user', nameToUse);
-
-        const userNameDisplay = document.getElementById('userNameDisplay');
-        const avatarInitial = document.getElementById('avatarInitial');
-        if (userNameDisplay) userNameDisplay.textContent = nameToUse;
-        if (avatarInitial) avatarInitial.textContent = nameToUse.charAt(0).toUpperCase();
-
-        authScreen.classList.add('hidden');
-        setTimeout(() => {
-            authScreen.style.display = 'none';
-            appPortal.classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }, 400);
-    }
-
-    const signInBtn = document.getElementById('signInBtn');
-    const loginEmail = document.getElementById('loginEmail');
-    const loginPassword = document.getElementById('loginPassword');
-    const authError = document.getElementById('authError');
-    const instantGuestBtn = document.getElementById('instantGuestBtn');
-    const signUpBtn = document.getElementById('signUpBtn');
-    const logoutBtn = document.getElementById('logoutBtn');
-
-    function validateAndLogin() {
-        if (!loginEmail || !loginPassword) return;
-
-        const emailVal = loginEmail.value.trim().toLowerCase();
-        const pwVal = loginPassword.value.trim();
-
-        const isEmailValid = (emailVal === HARDCODED_EMAIL);
-        const isPassValid = (pwVal === HARDCODED_PASS);
-
-        if (isEmailValid && isPassValid) {
-            if (authError) authError.style.display = 'none';
-            setInputStatus(loginEmail, 'success');
-            setInputStatus(loginPassword, 'success');
-
-            if (signInBtn) {
-                signInBtn.disabled = true;
-                const originalHtml = signInBtn.innerHTML;
-                signInBtn.innerHTML = `
-                    <span class="auth-spinner"></span>
-                    <span>Authenticating...</span>
-                `;
-                setTimeout(() => {
-                    signInBtn.innerHTML = originalHtml;
-                    signInBtn.disabled = false;
-                    grantAccess("Nisheed Kumar Rout");
-                }, 500);
-            } else {
-                grantAccess("Nisheed Kumar Rout");
-            }
-        } else {
-            if (!isEmailValid) setInputStatus(loginEmail, 'error');
-            else setInputStatus(loginEmail, 'success');
-
-            if (!isPassValid) setInputStatus(loginPassword, 'error');
-            else setInputStatus(loginPassword, 'success');
-
-            if (authError) {
-                authError.innerHTML = '<strong>Access Denied:</strong> Invalid credentials.<br>Use Email: <code>nisheedkumarrout@gmail.com</code> & Password: <code>1234</code>';
-                authError.style.display = 'block';
-            }
-            shakeCard();
-        }
-    }
-
-    if (signInBtn) {
-        signInBtn.addEventListener('click', e => {
-            e.preventDefault();
-            validateAndLogin();
-        });
-    }
-
-    [loginEmail, loginPassword].forEach(input => {
-        if (!input) return;
-        input.addEventListener('keydown', e => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                validateAndLogin();
-            }
-        });
-        input.addEventListener('input', () => {
-            if (authError) authError.style.display = 'none';
-            input.classList.remove('error');
-        });
-    });
-
-    if (instantGuestBtn) {
-        instantGuestBtn.addEventListener('click', e => {
-            e.preventDefault();
-            if (loginEmail) loginEmail.value = HARDCODED_EMAIL;
-            if (loginPassword) loginPassword.value = HARDCODED_PASS;
-            validateAndLogin();
-        });
-    }
-
-    if (signUpBtn) {
-        signUpBtn.addEventListener('click', e => {
-            e.preventDefault();
-            const name = document.getElementById('signupName');
-            const email = document.getElementById('signupEmail');
-            const pw = document.getElementById('signupPassword');
-            let valid = true;
-
-            if (!name.value.trim()) { setInputStatus(name, 'error'); valid = false; }
-            else setInputStatus(name, 'success');
-
-            if (!email.value || !emailRe.test(email.value)) { setInputStatus(email, 'error'); valid = false; }
-            else setInputStatus(email, 'success');
-
-            if (!pw.value || pw.value.length < 4) { setInputStatus(pw, 'error'); valid = false; }
-            else setInputStatus(pw, 'success');
-
-            if (!valid) {
-                shakeCard();
-                return;
-            }
-
-            signUpBtn.disabled = true;
-            const originalHtml = signUpBtn.innerHTML;
-            signUpBtn.innerHTML = `
-                <span class="auth-spinner"></span>
-                <span>Creating Profile...</span>
-            `;
-
-            setTimeout(() => {
-                signUpBtn.innerHTML = originalHtml;
-                signUpBtn.disabled = false;
-                grantAccess(name.value.trim());
-            }, 700);
-        });
-    }
-
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
-            sessionStorage.removeItem('bharata_user');
-            appPortal.classList.remove('active');
-            setTimeout(() => {
-                authScreen.style.display = 'flex';
-                void authScreen.offsetWidth;
-                authScreen.classList.remove('hidden');
-                if (loginEmail) {
-                    loginEmail.value = HARDCODED_EMAIL;
-                    loginEmail.classList.remove('error', 'success');
-                }
-                if (loginPassword) {
-                    loginPassword.value = HARDCODED_PASS;
-                    loginPassword.classList.remove('error', 'success');
-                }
-                if (authError) authError.style.display = 'none';
-            }, 300);
-        });
-    }
-
-    // Always display the login screen cleanly on load/refresh so the user can test credentials
-    sessionStorage.removeItem('bharata_user');
 
     // =========================================================================
     // 4. PORTAL TAB NAVIGATION CONTROLLER
@@ -637,11 +397,24 @@
     const brandHomeBtn = document.getElementById('brandHomeBtn');
     if (brandHomeBtn) brandHomeBtn.addEventListener('click', () => switchPortalTab('tab-home'));
 
-    const launchActivity1 = document.getElementById('launchActivity1');
-    if (launchActivity1) launchActivity1.addEventListener('click', () => switchPortalTab('tab-timeline'));
+    ['launchP1', 'launchActivity1'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('click', () => switchPortalTab('tab-timeline'));
+    });
 
-    const launchActivity2 = document.getElementById('launchActivity2');
-    if (launchActivity2) launchActivity2.addEventListener('click', () => switchPortalTab('tab-map'));
+    ['launchP2', 'launchActivity2'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('click', () => switchPortalTab('tab-map'));
+    });
+
+    const launchP4 = document.getElementById('launchP4');
+    if (launchP4) launchP4.addEventListener('click', () => switchPortalTab('tab-project4'));
+
+    const launchP5 = document.getElementById('launchP5');
+    if (launchP5) launchP5.addEventListener('click', () => switchPortalTab('tab-project5'));
+
+    const launchP6 = document.getElementById('launchP6');
+    if (launchP6) launchP6.addEventListener('click', () => switchPortalTab('tab-project6'));
 
     // =========================================================================
     // 5. ACTIVITY 1: INDIAN ART HISTORY TIMELINE CONTROLLER
@@ -969,6 +742,50 @@
             });
         });
     }
+
+    // =========================================================================
+    // 7. UNIVERSAL PROJECT LIGHTBOX CONTROLLER (PROJECTS 1, 2, 6)
+    // =========================================================================
+    const projectLightboxModal = document.getElementById('projectLightboxModal');
+    const closeLightboxBtn = document.getElementById('closeLightboxBtn');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxTitle = document.getElementById('lightboxTitle');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+
+    function openProjectLightbox(src, title, caption) {
+        if (!projectLightboxModal || !lightboxImage) return;
+        lightboxImage.src = src;
+        if (lightboxTitle) lightboxTitle.textContent = title || 'Artwork Preview';
+        if (lightboxCaption) lightboxCaption.innerHTML = caption || '';
+        projectLightboxModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeProjectLightbox() {
+        if (!projectLightboxModal) return;
+        projectLightboxModal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    if (closeLightboxBtn) closeLightboxBtn.addEventListener('click', closeProjectLightbox);
+    if (projectLightboxModal) {
+        projectLightboxModal.addEventListener('click', e => {
+            if (e.target === projectLightboxModal) closeProjectLightbox();
+        });
+    }
+
+    // Attach click listeners to all elements with data-img
+    document.querySelectorAll('[data-img]').forEach(el => {
+        el.addEventListener('click', () => {
+            openProjectLightbox(el.dataset.img, el.dataset.title, el.dataset.caption);
+        });
+    });
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+            closeProjectLightbox();
+        }
+    });
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initMap);

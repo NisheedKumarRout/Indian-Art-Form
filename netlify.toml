@@ -1,0 +1,24 @@
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/*.docx"
+  [headers.values]
+    Content-Type = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    Content-Disposition = "attachment"
+
+[[headers]]
+  for = "/*.pdf"
+  [headers.values]
+    Content-Type = "application/pdf"
+    Content-Disposition = "inline"
+
+[[redirects]]
+  from = "/paper"
+  to = "/Project 5 - Mahabalipuram Sculpture Thematic Analysis.docx"
+  status = 200
+
+[[redirects]]
+  from = "/poster"
+  to = "/Project 6 - Regional Painting Fusion Poster.pdf"
+  status = 200

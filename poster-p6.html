@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 6 Poster: Regional Painting Fusion & Modern Heritage</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #070b19;
+            --bg-card: #0e162b;
+            --bg-sub: #141e38;
+            --gold: #d4af37;
+            --gold-light: #f7e089;
+            --gold-border: #8c7026;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-dim: #cbd5e1;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #02040a;
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 24px 16px;
+            min-height: 100vh;
+        }
+
+        .actions-bar {
+            width: 100%;
+            max-width: 1380px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding: 10px 18px;
+            background: #0e162b;
+            border: 1px solid var(--gold-border);
+            border-radius: 8px;
+        }
+
+        .actions-bar a, .actions-bar button {
+            color: var(--gold-light);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            background: #1a2542;
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid var(--gold-border);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .actions-bar a:hover, .actions-bar button:hover {
+            background: var(--gold);
+            color: #000;
+        }
+
+        /* Printable Poster Container (A3 Aspect Ratio) */
+        .poster-container {
+            width: 100%;
+            max-width: 1380px;
+            background: var(--bg-deep);
+            border: 3px solid var(--gold);
+            outline: 1px solid var(--gold-border);
+            outline-offset: -8px;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85);
+            position: relative;
+        }
+
+        /* Top Header */
+        .poster-header {
+            background: #101a33;
+            border: 1px solid var(--gold);
+            border-radius: 8px;
+            padding: 18px 24px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .inst-title {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .course-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .poster-main-title {
+            font-family: 'Cinzel', serif;
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+
+        .poster-tagline {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 13.5px;
+            color: var(--gold-light);
+        }
+
+        /* 4 Cards Grid */
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .art-card {
+            background: var(--bg-card);
+            border: 1px solid #2b3b60;
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .art-card-tag {
+            background: #1a2542;
+            color: var(--gold-light);
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .art-card-title {
+            font-family: 'Cinzel', serif;
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 2px;
+        }
+
+        .art-card-sub {
+            font-size: 10.5px;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .art-img-box {
+            width: 100%;
+            height: 200px;
+            background: #060a14;
+            border: 1px solid var(--gold);
+            border-radius: 6px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+
+        .art-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .bullet-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .bullet-item {
+            font-size: 10px;
+            line-height: 1.45;
+            color: var(--text-dim);
+            padding-left: 14px;
+            position: relative;
+        }
+
+        .bullet-item::before {
+            content: "•";
+            color: var(--gold);
+            position: absolute;
+            left: 0;
+            top: -1px;
+            font-size: 14px;
+        }
+
+        .bullet-item strong {
+            color: #fff;
+            display: block;
+            margin-bottom: 1px;
+        }
+
+        /* Bottom Section: Left Analysis + Right Contributors */
+        .bottom-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 18px;
+        }
+
+        .analysis-box {
+            background: #0c1324;
+            border: 1px solid #2b3b60;
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .analysis-box h4 {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid #1a2542;
+        }
+
+        .analysis-text {
+            font-size: 10.5px;
+            line-height: 1.55;
+            color: #cbd5e1;
+            margin-bottom: 12px;
+        }
+
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 9.5px;
+        }
+
+        .matrix-table th {
+            background: #202f54;
+            color: var(--gold-light);
+            text-align: left;
+            padding: 6px 8px;
+            font-weight: 700;
+        }
+
+        .matrix-table td {
+            padding: 6px 8px;
+            border-bottom: 1px solid #1a2542;
+            color: #cbd5e1;
+        }
+
+        .matrix-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .matrix-table td strong {
+            color: #fff;
+        }
+
+        /* Contributors Box (Bottom Right) */
+        .contributors-box {
+            background: #0e162b;
+            border: 2px solid var(--gold);
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .contrib-header {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            text-align: center;
+            border-bottom: 1px solid #1a2542;
+            padding-bottom: 6px;
+        }
+
+        .contrib-list {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            margin-bottom: 14px;
+        }
+
+        .contrib-item {
+            background: var(--bg-sub);
+            border-radius: 6px;
+            padding: 6px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .contrib-name {
+            font-size: 11px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .contrib-reg {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--gold-light);
+            background: #22335c;
+            padding: 2px 7px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .contrib-inst {
+            text-align: center;
+            font-size: 9.5px;
+            color: var(--text-muted);
+            border-top: 1px solid #1a2542;
+            padding-top: 8px;
+        }
+
+        .contrib-inst strong {
+            color: var(--gold);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        @media print {
+            body {
+                background: #fff;
+                padding: 0;
+            }
+            .actions-bar {
+                display: none;
+            }
+            .poster-container {
+                box-shadow: none;
+                max-width: 100%;
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="actions-bar">
+        <div>
+            <strong>Project 6 Poster Deliverable</strong> &bull; Indian Art Form (21LEM301T)
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <a href="Project 6 - Regional Painting Fusion Poster.pdf" download>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download Vector PDF (For Canva / Printing)
+            </a>
+            <button onclick="window.print()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                Print Poster / Save PDF
+            </button>
+            <a href="index.html">Back to Main Portal &rarr;</a>
+        </div>
+    </div>
+
+    <div class="poster-container">
+        <!-- Header -->
+        <header class="poster-header">
+            <div class="inst-title">SRM INSTITUTE OF SCIENCE AND TECHNOLOGY &bull; DEPARTMENT OF COMPUTING TECHNOLOGIES</div>
+            <div class="course-sub">Course: Indian Art Form (21LEM301T / 21CSC301T) &bull; Academic Year 2026 &bull; Component: CLA-I Assignment 3 (CO2 / CO5 &bull; 10 Marks)</div>
+            <h1 class="poster-main-title">PROJECT 6: REGIONAL PAINTING FUSION &amp; MODERN HERITAGE</h1>
+            <div class="poster-tagline">Synthesizing Indigenous Folk Art, Temple Scroll Narratives, and Contemporary Modernist Abstraction</div>
+        </header>
+
+        <!-- 4 Core Showcase Cards -->
+        <div class="showcase-grid">
+            <!-- Card 1 -->
+            <div class="art-card">
+                <span class="art-card-tag">Fusion 1 &bull; Maharashtra &amp; Andhra</span>
+                <h3 class="art-card-title">Warli &amp; Kalamkari</h3>
+                <div class="art-card-sub">Tribal Minimalism Meets Temple Narrative</div>
+                <div class="art-img-box">
+                    <img src="fusion_images/warli-kalamkari.png" alt="Warli & Kalamkari Fusion">
+                </div>
+                <ul class="bullet-list">
+                    <li class="bullet-item">
+                        <strong>Primal Geometric Minimalism:</strong>
+                        Palghar Warli basic shapes (circle, triangle, square) rendered in white rice-flour pigment on earthen red ochre.
+                    </li>
+                    <li class="bullet-item">
+                        <strong>Temple Scroll Intricacy:</strong>
+                        Srikalahasti freehand black kalam outlines and natural vegetal dyes (madder, indigo, myrobalan).
+                    </li>
+                    <li class="bullet-item">
+                        <strong>Thematic Harmony:</strong>
+                        The communal Tarpa harvest dance circle interwoven with sacred Krishna-Radha woodland mythologies.
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="art-card">
+                <span class="art-card-tag">Fusion 2 &bull; Bihar &amp; Odisha</span>
+                <h3 class="art-card-title">Madhubani &amp; Pattachitra</h3>
+                <div class="art-card-sub">Folk Linework Meets Cloth Scroll Drama</div>
+                <div class="art-img-box">
+                    <img src="fusion_images/madhubani-pattachitra.png" alt="Madhubani & Pattachitra Fusion">
+                </div>
+                <ul class="bullet-list">
+                    <li class="bullet-item">
+                        <strong>Mithila Double-Line Rhythm:</strong>
+                        Intricate Kachni (line shading) and Bharni (color fill) techniques utilizing bamboo nibs and natural mineral dyes.
+                    </li>
+                    <li class="bullet-item">
+                        <strong>Odishan Patta Canvas:</strong>
+                        Prepared cotton cloth stiffened with tamarind seed paste, framing monumental Jagannath-style calligraphic eyes.
+                    </li>
+                    <li class="bullet-item">
+                        <strong>Thematic Harmony:</strong>
+                        Goddess Durga and royal courtly deities framed within dense cosmological peacocks, fish, and lotus borders.
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="art-card">
+                <span class="art-card-tag">Fusion 3 &bull; Madhya Pradesh &amp; Tamil Nadu</span>
+                <h3 class="art-card-title">Gond &amp; Tanjore</h3>
+                <div class="art-card-sub">Forest Animism Meets Gilded Splendour</div>
+                <div class="art-img-box">
+                    <img src="fusion_images/gond-tanjore.png" alt="Gond & Tanjore Fusion">
+                </div>
+                <ul class="bullet-list">
+                    <li class="bullet-item">
+                        <strong>Pardhan Gond Lineage:</strong>
+                        Repetitive dot-and-dash linework evoking sacred forest spirits and animistic life force (Bana/Prakriti).
+                    </li>
+                    <li class="bullet-item">
+                        <strong>Thanjavur Gilded Luxury:</strong>
+                        Embossed gesso limestone paste relief embellished with 22-karat gold leaf foil and inset polished glass gems.
+                    </li>
+                    <li class="bullet-item">
+                        <strong>Thematic Harmony:</strong>
+                        The primordial forest elephant and bird spirits crowned with opulent royal temple arches and divine golden halos.
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="art-card">
+                <span class="art-card-tag">Modern Heritage &bull; PAG (1980s)</span>
+                <h3 class="art-card-title">S.H. Raza's 'Bindu'</h3>
+                <div class="art-card-sub">Metaphysical Origin of Space &amp; Colour</div>
+                <div class="art-img-box">
+                    <img src="fusion_images/raza-bindu.png" alt="S.H. Raza Bindu">
+                </div>
+                <ul class="bullet-list">
+                    <li class="bullet-item">
+                        <strong>Cosmic Black Void (Shunya):</strong>
+                        The focal black dot symbolizing the concentrated seed of infinite potential, silence, and cosmic awakening.
+                    </li>
+                    <li class="bullet-item">
+                        <strong>Pancha Tattva Palette:</strong>
+                        Warm geometric radiation representing the five primordial elements: Earth, Fire, Water, Air, and Ether.
+                    </li>
+                    <li class="bullet-item">
+                        <strong>Modernist Heritage:</strong>
+                        Reconciles French post-painterly geometric abstraction with ancient Upanishadic metaphysics and sacred Indian yantras.
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Bottom Section: Analysis (Left) + Contributors (Right) -->
+        <div class="bottom-section">
+            <div class="analysis-box">
+                <h4>Comparative Dialectic: Cross-Pollination of Vernacular, Sacred &amp; Modern Visual Codes</h4>
+                <p class="analysis-text">
+                    Indian art history is defined by a dynamic dialogue between <em>Marga</em> (the pan-Indian codified classical aesthetic) and <em>Desi</em> (localized folk and tribal traditions). Project 6 dismantles colonial hierarchies by demonstrating that tribal abstraction (Warli and Gond) possesses identical philosophical rigor to classical temple arts (Kalamkari and Tanjore). This trajectory culminates in S.H. Raza's <em>Bindu</em>, proving that 20th-century Indian modernism achieved its most profound originality not through Western imitation, but by returning to indigenous sacred geometric foundations.
+                </p>
+
+                <table class="matrix-table">
+                    <thead>
+                        <tr>
+                            <th>Tradition</th>
+                            <th>Geographic Origin</th>
+                            <th>Material Medium</th>
+                            <th>Core Visual Rhythm</th>
+                            <th>Cosmological Symbolism</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Warli &amp; Kalamkari</strong></td>
+                            <td>Maharashtra / Andhra</td>
+                            <td>Rice paste / Vegetal dyes on cotton</td>
+                            <td>Geometric circles &amp; organic scroll curves</td>
+                            <td>Harvest fertility &amp; Puranic avatars</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Madhubani &amp; Patta</strong></td>
+                            <td>Bihar / Odisha</td>
+                            <td>Mineral dyes / Tamarind cloth</td>
+                            <td>Double contour lines &amp; calligraphic eyes</td>
+                            <td>Mithila flora &amp; Jagannath bhakti</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Gond &amp; Tanjore</strong></td>
+                            <td>Madhya Pradesh / Tamil Nadu</td>
+                            <td>Acrylic / 22k gold foil on wood</td>
+                            <td>Pointillist lines &amp; embossed gold gesso</td>
+                            <td>Sacred animism &amp; royal divinity</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Raza Modernism</strong></td>
+                            <td>PAG / Paris / India</td>
+                            <td>Acrylic on canvas</td>
+                            <td>Concentric circles &amp; square grids</td>
+                            <td>Bindu as Shunya &amp; cosmic epicenter</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Contributors Box (Bottom Right) -->
+            <div class="contributors-box">
+                <div>
+                    <div class="contrib-header">Project Contributors &amp; Registration</div>
+                    <div class="contrib-list">
+                        <div class="contrib-item">
+                            <span class="contrib-name">Nisheed Kumar Rout</span>
+                            <span class="contrib-reg">RA2411003011822</span>
+                        </div>
+                        <div class="contrib-item">
+                            <span class="contrib-name">Rudra Prakash Swain</span>
+                            <span class="contrib-reg">RA2411003011778</span>
+                        </div>
+                        <div class="contrib-item">
+                            <span class="contrib-name">Abhinav Singh</span>
+                            <span class="contrib-reg">RA2411003011820</span>
+                        </div>
+                        <div class="contrib-item">
+                            <span class="contrib-name">Krishan Kumar</span>
+                            <span class="contrib-reg">RA2411003011812</span>
+                        </div>
+                        <div class="contrib-item">
+                            <span class="contrib-name">Samant Kumar Mishra</span>
+                            <span class="contrib-reg">RA2411003011790</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contrib-inst">
+                    <strong>SRM INSTITUTE OF SCIENCE AND TECHNOLOGY</strong>
+                    School of Computing &bull; Department of Computing Technologies<br>
+                    Continuous Learning Assessment – I (CLA-I Assignment 3)
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
